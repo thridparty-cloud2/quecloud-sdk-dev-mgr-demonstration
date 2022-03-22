@@ -119,8 +119,8 @@ public class QueCloudDevMgrDemo {
 
         // 批量删除 sn 与 pkdk 的对应关系
         SNDeleteDeviceRequestBody requestBody1 = new SNDeleteDeviceRequestBody();
-        requestBody.setProductKey("${productKey}");
-        requestBody.setDeviceKey("${deviceKey}");
+        requestBody1.setProductKey("${productKey}");
+        requestBody1.setDeviceKey("${deviceKey}");
         List<SNDeleteDeviceRequestBody> requestBodyLsit1=new ArrayList<>();
         requestBodyLsit1.add(requestBody1);
         DeleteSNBindDeviceRequest deleteSNBindDeviceRequest = new DeleteSNBindDeviceRequest(requestBodyLsit1);
