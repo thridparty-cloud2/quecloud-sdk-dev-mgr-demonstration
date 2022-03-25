@@ -19,10 +19,7 @@ import com.quec.model.project.request.ProjectListRequest;
 import com.quec.model.project.response.ProductItemsResponse;
 import com.quec.model.project.response.ProjectDetailResponse;
 import com.quec.model.project.response.ProjectListResponse;
-import com.quec.model.quece.request.QueceCreateRequest;
-import com.quec.model.quece.request.QueceDetailRequest;
-import com.quec.model.quece.request.SubscribeCreateRequest;
-import com.quec.model.quece.request.SubscribeIdRequest;
+import com.quec.model.quece.request.*;
 import com.quec.model.quece.response.QueceCreateResponse;
 import com.quec.model.quece.response.QueceDetailResponse;
 import com.quec.model.quece.response.SubscribeCreateResponse;
@@ -170,6 +167,22 @@ public class QueCloudDevMgrDemo {
         SubscribeCreateRequest subscribeCreateRequest = new SubscribeCreateRequest("${subscribeName}",1,"${productKey}","${queueName}",msgTypes);
         SubscribeCreateResponse subscribeCreateResponse=mgrClient.createSubscribe(subscribeCreateRequest);
         log.info("创建订阅返回结果:{}",JSONObject.toJSONString(subscribeCreateResponse));
+
+        // 创建企业用户订阅
+        List<Integer> msgTypes_EnterpriseUser = new ArrayList<Integer>();
+        // msgTypes 消息类型：101-产品信息变更 102-设备信息变更 103-物模型发布信息变更
+        msgTypes_EnterpriseUser.add(101);
+        EnterpriseUserSubscribeCreateRequest enterpriseUserSubscribeCreateRequest = new EnterpriseUserSubscribeCreateRequest("${subscribeName}", "${queueName}", msgTypes_EnterpriseUser);
+        SubscribeCreateResponse enterpriseUser_subscribeCreateResponse=mgrClient.createEnterpriseUserSubscribe(enterpriseUserSubscribeCreateRequest);
+        log.info("创建企业用户订阅:{}",JSONObject.toJSONString(enterpriseUser_subscribeCreateResponse));
+
+        // 创建终端用户订阅
+        List<Integer> msgTypes_EndUser = new ArrayList<Integer>();
+        // msgTypes 消息类型：201-终端用户新增/删除/修改
+        msgTypes_EnterpriseUser.add(201);
+        EndUserSubscribeCreateRequest endUserSubscribeCreateRequest = new EndUserSubscribeCreateRequest("${subscribeName}", "${queueName}", msgTypes_EnterpriseUser,"${endUserDomain}");
+        SubscribeCreateResponse endUser_subscribeCreateResponse=mgrClient.createEndUserSubscribe(endUserSubscribeCreateRequest);
+        log.info("创建终端用户订阅:{}",JSONObject.toJSONString(endUser_subscribeCreateResponse));
 
         // 订阅详情
         SubscribeIdRequest subscribeIdRequest = new SubscribeIdRequest("${subscribeId}");
