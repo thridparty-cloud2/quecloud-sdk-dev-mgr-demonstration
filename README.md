@@ -8,4 +8,4 @@
 3.根据每个方法的参数说明替换方法中的参数
 4.执行相应的方法即可
 # 多租户
-针对需要获取不同用户的数据,根据accessKey和accessSecre创建不同MgrClient对象即可
+针对需要获取不同用户的数据,根据AccessKey和AccessSecre创建不同MgrClient对象即可
