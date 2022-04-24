@@ -9,3 +9,5 @@
 - 4.执行相应的方法即可
 # 多租户
 针对需要获取不同用户的数据,根据AccessKey和AccessSecre创建不同MgrClient对象即可
+# 在线交流
+<img style="width:20%;" src="/IMG/CBBE3E2F06944E79CF5C87267B909136.png" />
