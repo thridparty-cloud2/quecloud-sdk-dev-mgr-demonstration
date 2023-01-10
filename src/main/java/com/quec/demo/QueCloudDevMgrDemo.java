@@ -4,10 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.quec.client.MgrClient;
 import com.quec.config.InitClientProfile;
 import com.quec.model.BasicResultResponse;
-import com.quec.model.device.request.DeviceBasicRequest;
-import com.quec.model.device.request.DeviceDataHistoryRequest;
-import com.quec.model.device.request.DeviceEventDataRequest;
-import com.quec.model.device.request.DeviceListRequest;
+import com.quec.model.device.request.*;
 import com.quec.model.device.response.*;
 import com.quec.model.product.request.DetailProductRequest;
 import com.quec.model.product.request.ProductListRequest;
@@ -80,6 +77,29 @@ public class QueCloudDevMgrDemo {
         DeviceBasicRequest deviceBasicRequest = new DeviceBasicRequest("${productKey}","${deviceKey}");
         DeviceDetailResponse deviceDetailResponse = mgrClient.getDeviceDetail(deviceBasicRequest);
         log.info("获取设备详情返回结果:{}",JSONObject.toJSONString(deviceDetailResponse));
+
+        //获取设备资源
+        DeviceBasicRequest deviceBasicRequest2 = new DeviceBasicRequest("${productKey}","${deviceKey}");
+        DeviceResourceResponse deviceResourceResponse = mgrClient.deviceResource(deviceBasicRequest2);
+        log.info("获取设备资源返回结果:{}",JSONObject.toJSONString(deviceResourceResponse));
+
+        //批量添加设备
+        DeviceBatchCreateRequest deviceBatchCreateRequest = new DeviceBatchCreateRequest();
+        DeviceBatchCreateRequestBody deviceBatchCreateRequestBody1 = new DeviceBatchCreateRequestBody("${deviceKey}");
+        DeviceBatchCreateRequestBody deviceBatchCreateRequestBody2 = new DeviceBatchCreateRequestBody("${deviceKey}");
+        List<DeviceBatchCreateRequestBody> devices = new ArrayList<>();
+        devices.add(deviceBatchCreateRequestBody1);
+        devices.add(deviceBatchCreateRequestBody2);
+        deviceBatchCreateRequest.setDeviceList(devices);
+        deviceBatchCreateRequest.setProductKey("${productKey}");
+        DeviceBatchCreateResponse deviceBatchCreateResponse = mgrClient.deviceBatchCreate(deviceBatchCreateRequest);
+        log.info("批量添加设备返回结果:{}",JSONObject.toJSONString(deviceBatchCreateResponse));
+
+        //添加设备
+        CreateDeviceRequest createDeviceRequest = new CreateDeviceRequest("${productKey}","${deviceKey}");
+        createDeviceRequest.setDeviceName("${deviceName}");
+        CreateDeviceResponse createDeviceResponse = mgrClient.deviceCreate(createDeviceRequest);
+        log.info("添加设备返回结果:{}",JSONObject.toJSONString(createDeviceResponse));
 
         // 获取设备历史上下行信息查询
         DeviceDataHistoryRequest deviceDataHistoryRequest = new DeviceDataHistoryRequest("${productKey}","${deviceKey}");
@@ -187,6 +207,14 @@ public class QueCloudDevMgrDemo {
         EndUserSubscribeCreateRequest endUserSubscribeCreateRequest = new EndUserSubscribeCreateRequest("${subscribeName}", "${queueName}", msgTypes_EnterpriseUser,"${endUserDomain}");
         SubscribeCreateResponse endUser_subscribeCreateResponse=mgrClient.createEndUserSubscribe(endUserSubscribeCreateRequest);
         log.info("创建终端用户订阅:{}",JSONObject.toJSONString(endUser_subscribeCreateResponse));
+
+        //创建SaaS用户订阅
+        List<Integer> msgTypes_SaaSUser = new ArrayList<Integer>();
+        // msgTypes 消息类型：101-产品信息变更 102-设备信息变更 103-物模型发布信息变更 104-产品授权信息
+        msgTypes_SaaSUser.add(101);
+        SaasSubscribeCreateRequest saasSubscribeCreateRequest = new SaasSubscribeCreateRequest("${subscribeName}","${queueName}", msgTypes_SaaSUser);
+        SubscribeCreateResponse saaSUser_SubscribeCreateResponse = mgrClient.createSaaSSubscribe(saasSubscribeCreateRequest);
+        log.info("创建SaaS用户订阅:{}",JSONObject.toJSONString(saaSUser_SubscribeCreateResponse));
 
         // 订阅详情
         SubscribeIdRequest subscribeIdRequest = new SubscribeIdRequest("${subscribeId}");
