@@ -78,12 +78,12 @@ public class QueCloudDevMgrDemo {
         DeviceDetailResponse deviceDetailResponse = mgrClient.getDeviceDetail(deviceBasicRequest);
         log.info("获取设备详情返回结果:{}",JSONObject.toJSONString(deviceDetailResponse));
 
-        //获取设备资源
+        // 获取设备资源
         DeviceBasicRequest deviceBasicRequest2 = new DeviceBasicRequest("${productKey}","${deviceKey}");
         DeviceResourceResponse deviceResourceResponse = mgrClient.deviceResource(deviceBasicRequest2);
         log.info("获取设备资源返回结果:{}",JSONObject.toJSONString(deviceResourceResponse));
 
-        //批量添加设备
+        // 批量添加设备
         DeviceBatchCreateRequest deviceBatchCreateRequest = new DeviceBatchCreateRequest();
         DeviceBatchCreateRequestBody deviceBatchCreateRequestBody1 = new DeviceBatchCreateRequestBody("${deviceKey}");
         DeviceBatchCreateRequestBody deviceBatchCreateRequestBody2 = new DeviceBatchCreateRequestBody("${deviceKey}");
@@ -95,7 +95,7 @@ public class QueCloudDevMgrDemo {
         DeviceBatchCreateResponse deviceBatchCreateResponse = mgrClient.deviceBatchCreate(deviceBatchCreateRequest);
         log.info("批量添加设备返回结果:{}",JSONObject.toJSONString(deviceBatchCreateResponse));
 
-        //添加设备
+        // 添加设备
         CreateDeviceRequest createDeviceRequest = new CreateDeviceRequest("${productKey}","${deviceKey}");
         createDeviceRequest.setDeviceName("${deviceName}");
         CreateDeviceResponse createDeviceResponse = mgrClient.deviceCreate(createDeviceRequest);
@@ -131,17 +131,17 @@ public class QueCloudDevMgrDemo {
         List<SNBindDeviceRequestBody> requestBodyLsit=new ArrayList<>();
         requestBodyLsit.add(requestBody);
         CreateSNBindDeviceRequest createSNBindDeviceRequest = new CreateSNBindDeviceRequest("overwritePkDk",requestBodyLsit);
-        SNBindDeviceResponse sNBindDeviceResponse=mgrClient.createSnBindDevice(createSNBindDeviceRequest);
+        SNBindDeviceResponse sNBindDeviceResponse = mgrClient.createSnBindDevice(createSNBindDeviceRequest);
         log.info("批量添加（或覆盖）sn 与 pk/dk 的关系返回结果:{}",JSONObject.toJSONString(sNBindDeviceResponse));
 
         // 批量删除 sn 与 pkdk 的对应关系
         SNDeleteDeviceRequestBody requestBody1 = new SNDeleteDeviceRequestBody();
         requestBody1.setProductKey("${productKey}");
         requestBody1.setDeviceKey("${deviceKey}");
-        List<SNDeleteDeviceRequestBody> requestBodyLsit1=new ArrayList<>();
+        List<SNDeleteDeviceRequestBody> requestBodyLsit1 = new ArrayList<>();
         requestBodyLsit1.add(requestBody1);
         DeleteSNBindDeviceRequest deleteSNBindDeviceRequest = new DeleteSNBindDeviceRequest(requestBodyLsit1);
-        SNBindDeviceResponse result=mgrClient.delSnBindDevice(deleteSNBindDeviceRequest);
+        SNBindDeviceResponse result = mgrClient.delSnBindDevice(deleteSNBindDeviceRequest);
         log.info("批量删除 sn 与 pkdk 的对应关系返回结果:{}",JSONObject.toJSONString(result));
 
         // 创建队列
@@ -153,6 +153,11 @@ public class QueCloudDevMgrDemo {
         QueceDetailRequest queceDetailRequest = new QueceDetailRequest("${queueId}");
         QueceDetailResponse queceDetailResponse = mgrClient.getQueceDetail(queceDetailRequest);
         log.info("队列详情返回结果:{}",JSONObject.toJSONString(queceDetailResponse));
+
+        // 删除队列
+        QueceDetailRequest queceDetailRequest1 = new QueceDetailRequest("${queueId}");
+        BasicResultResponse basicResultResponse1 = mgrClient.deleteQuece(queceDetailRequest1);
+        log.info("删除队列返回结果:{}",JSONObject.toJSONString(basicResultResponse1));
 
         // 创建订阅
         List<Integer> msgTypes = new ArrayList<Integer>();
@@ -226,8 +231,13 @@ public class QueCloudDevMgrDemo {
         BasicResultResponse basicResultResponse = mgrClient.startSubscribe(subscribeIdRequest1);
         log.info("启动订阅返回结果:{}",JSONObject.toJSONString(basicResultResponse));
 
+        // 删除订阅
+        SubscribeIdRequest subscribeIdRequest3 = new SubscribeIdRequest("${subscribeId}");
+        BasicResultResponse basicResultResponse3 = mgrClient.deleteSubscribe(subscribeIdRequest3);
+        log.info("删除订阅返回结果:{}",JSONObject.toJSONString(basicResultResponse3));
+
         // 停止订阅
-        SubscribeIdRequest subscribeIdRequest2 = new SubscribeIdRequest("531");
+        SubscribeIdRequest subscribeIdRequest2 = new SubscribeIdRequest("${subscribeId}");
         BasicResultResponse basicResultResponse2 = mgrClient.stopSubscribe(subscribeIdRequest2);
         log.info("停止订阅返回结果:{}",JSONObject.toJSONString(basicResultResponse2));
     }
