@@ -1,9 +1,12 @@
 package com.quec.demo;
 
 import com.alibaba.fastjson.JSONObject;
+import com.quec.action.ActionMapping;
 import com.quec.client.MgrClient;
 import com.quec.config.InitClientProfile;
 import com.quec.model.BasicResultResponse;
+import com.quec.model.BasicsModel;
+import com.quec.model.OpenApiRequest;
 import com.quec.model.device.request.*;
 import com.quec.model.device.response.*;
 import com.quec.model.product.request.DetailProductRequest;
@@ -26,6 +29,7 @@ import com.quec.model.snbind.response.CreateSNResponse;
 import com.quec.model.snbind.response.SNBindDeviceResponse;
 import com.quec.model.tsl.request.ObtainTslTslJsonRequest;
 import com.quec.model.tsl.response.ObtainTslTslJsonResponse;
+import com.quec.until.Common;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -143,6 +147,28 @@ public class QueCloudDevMgrDemo {
         DeleteSNBindDeviceRequest deleteSNBindDeviceRequest = new DeleteSNBindDeviceRequest(requestBodyLsit1);
         SNBindDeviceResponse result = mgrClient.delSnBindDevice(deleteSNBindDeviceRequest);
         log.info("批量删除 sn 与 pkdk 的对应关系返回结果:{}",JSONObject.toJSONString(result));
+
+        //根据 pk+sn 列表查询对应的 dk 列表
+        FindDkRequest requestBody2 = new FindDkRequest();
+        List<FindDkRequestInfo> findDkRequest = new ArrayList<>();
+        FindDkRequestInfo findDkRequestInfo =new FindDkRequestInfo();
+        findDkRequestInfo.setPk("${productKey}");
+        findDkRequestInfo.setSn("${sn}");
+        findDkRequest.add(findDkRequestInfo);
+        requestBody2.setFindDkRequest(findDkRequest);
+        SNBindDeviceResponse findDkResponse = mgrClient.findDkList(requestBody2);
+        log.info("根据 pk+sn 列表查询对应的 dk 列表返回结果:{}",JSONObject.toJSONString(findDkResponse));
+
+        //根据 pkdk 列表查询对应的 sn 列表
+        List<FindSNRequestInfo> findSnRequest = new ArrayList<>();
+        FindSNRequestInfo findSNRequestInfo =new FindSNRequestInfo();
+        findSNRequestInfo.setPk("${productKey}");
+        findSNRequestInfo.setDk("${deviceKey}");
+        findSnRequest.add(findSNRequestInfo);
+        FindSNRequest requestBody3 = new FindSNRequest(findSnRequest);
+        SNBindDeviceResponse findSNResponse = mgrClient.findSnList(requestBody3);
+        log.info("根据 pkdk 列表查询对应的 sn 列表返回结果:{}",JSONObject.toJSONString(findSNResponse));
+
 
         // 创建队列
         QueceCreateRequest createRequest = new QueceCreateRequest("${queueName}");
