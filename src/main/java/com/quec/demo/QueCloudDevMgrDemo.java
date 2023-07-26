@@ -1,12 +1,9 @@
 package com.quec.demo;
 
 import com.alibaba.fastjson.JSONObject;
-import com.quec.action.ActionMapping;
 import com.quec.client.MgrClient;
 import com.quec.config.InitClientProfile;
 import com.quec.model.BasicResultResponse;
-import com.quec.model.BasicsModel;
-import com.quec.model.OpenApiRequest;
 import com.quec.model.device.request.*;
 import com.quec.model.device.response.*;
 import com.quec.model.product.request.DetailProductRequest;
@@ -14,10 +11,8 @@ import com.quec.model.product.request.ProductListRequest;
 import com.quec.model.product.response.ProductInfoResponse;
 import com.quec.model.product.response.ProductListResponse;
 import com.quec.model.project.request.ProductItemsRequest;
-import com.quec.model.project.request.ProjectIdRequest;
 import com.quec.model.project.request.ProjectListRequest;
 import com.quec.model.project.response.ProductItemsResponse;
-import com.quec.model.project.response.ProjectDetailResponse;
 import com.quec.model.project.response.ProjectListResponse;
 import com.quec.model.quece.request.*;
 import com.quec.model.quece.response.QueceCreateResponse;
@@ -52,11 +47,6 @@ public class QueCloudDevMgrDemo {
         ProjectListResponse projectListResponse=mgrClient.getProjectList(projectListRequest);
         log.info("项目列表返回结果:{}",JSONObject.toJSONString(projectListResponse));
 
-        // 获取详情详情
-        ProjectIdRequest projectIdRequest=new ProjectIdRequest("${projectId}");
-        ProjectDetailResponse projectDetailResponse= mgrClient.getProjectDetail(projectIdRequest);
-        log.info("项目详情返回结果:{}",JSONObject.toJSONString(projectDetailResponse));
-
         // 产品品类列表
         ProductItemsRequest productItemsRequest=new ProductItemsRequest();
         ProductItemsResponse productItemsResponse=mgrClient.getProductItems(productItemsRequest);
@@ -87,23 +77,6 @@ public class QueCloudDevMgrDemo {
         DeviceResourceResponse deviceResourceResponse = mgrClient.deviceResource(deviceBasicRequest2);
         log.info("获取设备资源返回结果:{}",JSONObject.toJSONString(deviceResourceResponse));
 
-        // 批量添加设备
-        DeviceBatchCreateRequest deviceBatchCreateRequest = new DeviceBatchCreateRequest();
-        DeviceBatchCreateRequestBody deviceBatchCreateRequestBody1 = new DeviceBatchCreateRequestBody("${deviceKey}");
-        DeviceBatchCreateRequestBody deviceBatchCreateRequestBody2 = new DeviceBatchCreateRequestBody("${deviceKey}");
-        List<DeviceBatchCreateRequestBody> devices = new ArrayList<>();
-        devices.add(deviceBatchCreateRequestBody1);
-        devices.add(deviceBatchCreateRequestBody2);
-        deviceBatchCreateRequest.setDeviceList(devices);
-        deviceBatchCreateRequest.setProductKey("${productKey}");
-        DeviceBatchCreateResponse deviceBatchCreateResponse = mgrClient.deviceBatchCreate(deviceBatchCreateRequest);
-        log.info("批量添加设备返回结果:{}",JSONObject.toJSONString(deviceBatchCreateResponse));
-
-        // 添加设备
-        CreateDeviceRequest createDeviceRequest = new CreateDeviceRequest("${productKey}","${deviceKey}");
-        createDeviceRequest.setDeviceName("${deviceName}");
-        CreateDeviceResponse createDeviceResponse = mgrClient.deviceCreate(createDeviceRequest);
-        log.info("添加设备返回结果:{}",JSONObject.toJSONString(createDeviceResponse));
 
         // 获取设备历史上下行信息查询
         DeviceDataHistoryRequest deviceDataHistoryRequest = new DeviceDataHistoryRequest("${productKey}","${deviceKey}");
