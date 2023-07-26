@@ -24,7 +24,6 @@ import com.quec.model.snbind.response.CreateSNResponse;
 import com.quec.model.snbind.response.SNBindDeviceResponse;
 import com.quec.model.tsl.request.ObtainTslTslJsonRequest;
 import com.quec.model.tsl.response.ObtainTslTslJsonResponse;
-import com.quec.until.Common;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
