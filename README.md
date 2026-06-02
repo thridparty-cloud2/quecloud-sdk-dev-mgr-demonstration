@@ -1,13 +1,30 @@
-###### **本demo是针对产品、设备管理的sdk方法介绍(即：quecloud-sdk-dev-mgr jar的介绍)**
-# 开发环境
-- JDK1.8
-- maven 3.6.3
-# 方法介绍
-- 1.QueCloudDevMgrDemo.java中有各个方法的调用示例及参数说明
-- 2.更改QueCloudDevMgrDemo.java 中AccessKey、AccessSecret、endpoint(AccessKey和AccessSecre是设备管理平台用户创建AccessKey和AccessSecret,endpoint是链接地址，国内生成环境值为 iot-api.quectelcn.com)
-- 3.根据每个方法的参数说明替换方法中的参数
-- 4.执行相应的方法即可
-# 多租户
-针对需要获取不同用户的数据,根据AccessKey和AccessSecre创建不同MgrClient对象即可
-# 在线交流
+## QuecCloud Device Management SDK Demo
+
+This repository provides a demonstration project for the quecloud-sdk-dev-mgr library. It shows how to use the SDK to work with project, product, device, TSL, SN binding, queue, and subscription management APIs.
+
+## Prerequisites
+
+- JDK 1.8
+- Maven 3.6.3
+
+## Getting Started
+
+The main sample implementation is located in QueCloudDevMgrDemo.java, which contains example API calls and parameter descriptions for each supported operation.
+
+Before running the demo:
+
+1. Open QueCloudDevMgrDemo.java.
+2. Replace the placeholder values for AccessKey, AccessSecret, and endpoint.
+3. Replace the remaining placeholder parameters in each example method as needed.
+4. Run the relevant example method.
+
+AccessKey and AccessSecret must be created by a user in the device management platform. The endpoint should be set to the correct service address for your environment. For the China production environment, use iot-api.quectelcn.com.
+
+## Multi-tenant Usage
+
+If you need to access data for different users, create separate MgrClient instances with the corresponding AccessKey and AccessSecret for each tenant.
+
+## Support
+
+For communication or support, refer to the following contact image:
 <img style="width:20%;" src="/IMG/CBBE3E2F06944E79CF5C87267B909136.png" />
